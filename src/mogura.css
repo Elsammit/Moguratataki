@@ -1,0 +1,46 @@
+.divCenter{
+    text-align: center;
+}
+
+.title{
+    margin: 50px auto;
+    text-align: center;
+    font-size: 80px;
+}
+
+img{
+    width: 130px;
+    height: 130px;
+}
+
+table{
+    width: 300px;
+    height: 120px;
+    border-radius: 4px;
+    border:3px solid #333;
+    margin: 1px auto;
+    cursor : url(./image/hammer.png), auto;
+}
+
+.StButton{
+    font-size: 30px;
+    font-weight: bold;
+    padding:10px 30px;
+    color:#fff;
+    border-style: none;
+    background-color: #24d;
+    
+}
+
+.Mas{
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    font-size: 80px;
+    text-align: center;
+}
+
+.Message{
+    text-align: center;
+    font-size: 50px;   
+}
