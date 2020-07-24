@@ -13,7 +13,6 @@ export default class Todo extends Component  {
             StartFlg:false,
             result:0
         };
-        this.init()
     }
 
     onClick = (id) => {
@@ -53,20 +52,21 @@ export default class Todo extends Component  {
             }, 1000);
             document.getElementById("StButton").setAttribute("disabled", "disabled");
             document.getElementById("StButton").style.backgroundColor = "gray";
+            setTimeout(()=>{
+                this.finish_mogura();
+            },30000);
             Flg = true;
-        }else{
-            clearInterval(this.intervalId);
-            document.getElementById("StButton").removeAttribute("disabled");
-            document.getElementById("StButton").style.backgroundColor = "#24d";
-            Flg = false;
         }
         this.setState({
             StartFlg:Flg
         });
     }
 
-    init = () =>{
-        
+    finish_mogura = () =>{
+        console.log("test");
+        clearInterval(this.intervalId);
+        document.getElementById("StButton").removeAttribute("disabled");
+        document.getElementById("StButton").style.backgroundColor = "#24d";
     }
     
     render() {
