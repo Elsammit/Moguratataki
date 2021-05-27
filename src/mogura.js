@@ -4,7 +4,7 @@ import mogura from './image/mogura2.png';
 import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
 
-export default class Todo extends Component  {
+export default class Mogratataki extends Component  {
 
     constructor (props) {
         super(props);
