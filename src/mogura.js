@@ -63,7 +63,6 @@ export default class Mogratataki extends Component  {
     }
 
     finish_mogura = () =>{
-        console.log("test");
         clearInterval(this.intervalId);
         document.getElementById("StButton").removeAttribute("disabled");
         document.getElementById("StButton").style.backgroundColor = "#24d";
@@ -116,7 +115,6 @@ export default class Mogratataki extends Component  {
                     </tr>
                 </tbody>
             </table>
-                
             </div>
         );
     }
