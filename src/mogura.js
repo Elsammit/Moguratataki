@@ -11,6 +11,7 @@ export default class Mogratataki extends Component  {
         this.state = {
             location:"Mas1",
             StartFlg:false,
+            timer:0,
             result:0
         };
     }
@@ -21,6 +22,7 @@ export default class Mogratataki extends Component  {
         if(location === id){
             var img = document.getElementById(id);
             img.src = hit;
+            this.setState({result:this.state.result+1});
         }
     }
     
@@ -49,6 +51,7 @@ export default class Mogratataki extends Component  {
         if(StartFlg === false){
             this.intervalId = setInterval(()=>{
                 this.rand_MoguraUp();
+                this.setState({timer:this.state.timer+1});
             }, 1000);
             document.getElementById("StButton").setAttribute("disabled", "disabled");
             document.getElementById("StButton").style.backgroundColor = "gray";
@@ -68,51 +71,37 @@ export default class Mogratataki extends Component  {
         document.getElementById("StButton").style.backgroundColor = "#24d";
     }
     
+    MakeMap = () =>{
+        var List = [];
+        for(var i=1;i<=5;i++){
+            var buf = [];
+            for(var j=1;j<=5;j++){
+                var num = j + (i-1)*5;
+                var str = "Mas"+num;
+                buf.push(
+                    <td><img id={str} src={shibafu} alt="green" onClick={this.onClick.bind(this,str)} /></td>
+                );
+            }
+            List.push(<tr>{buf}</tr>);
+        }
+        return List;        
+    }
+
     render() {
-        
         return (<div className="divCenter">
             <label className="title">
                 <u>モグラたたきゲーム</u>
             </label>
             <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
             <label id="timer"></label>
+            <div>
+                時間:{this.state.timer}  
+                
+                スコア:{this.state.result}
+            </div>
             <table>
                 <tbody>
-                    <tr>
-                        <td><img id="Mas1" src={shibafu} alt="green" onClick={() => this.onClick("Mas1" )} /></td>
-                        <td><img id="Mas2" src={shibafu} alt="green" onClick={() => this.onClick("Mas2" )} /></td>
-                        <td><img id="Mas3" src={shibafu} alt="green"  onClick={() => this.onClick("Mas3" )} /></td>
-                        <td><img id="Mas4" src={shibafu} alt="green"  onClick={() => this.onClick("Mas4" )} /></td>
-                        <td><img id="Mas5" src={shibafu} alt="green"  onClick={() => this.onClick("Mas5" )} /></td>
-                    </tr>
-                    <tr>
-                        <td><img id="Mas6" src={shibafu} alt="green"  onClick={() => this.onClick("Mas6" )} /></td>
-                        <td><img id="Mas7" src={shibafu} alt="green"  onClick={() => this.onClick("Mas7" )} /></td>
-                        <td><img id="Mas8" src={shibafu} alt="green"  onClick={() => this.onClick("Mas8" )} /></td>
-                        <td><img id="Mas9" src={shibafu} alt="green"  onClick={() => this.onClick("Mas9" )} /></td>
-                        <td><img id="Mas10" src={shibafu} alt="green"  onClick={() => this.onClick("Mas10" )} /></td>
-                    </tr>
-                    <tr>
-                        <td><img id="Mas11" src={shibafu} alt="green"  onClick={() => this.onClick("Mas11" )} /></td>
-                        <td><img id="Mas12" src={shibafu} alt="green"  onClick={() => this.onClick("Mas12" )} /></td>
-                        <td><img id="Mas13" src={shibafu} alt="green"  onClick={() => this.onClick("Mas13" )} /></td>
-                        <td><img id="Mas14" src={shibafu} alt="green"  onClick={() => this.onClick("Mas14" )} /></td>
-                        <td><img id="Mas15" src={shibafu} alt="green"  onClick={() => this.onClick("Mas15" )} /></td>
-                    </tr>
-                    <tr>
-                        <td><img id="Mas16" src={shibafu} alt="green"  onClick={() => this.onClick("Mas16" )} /></td>
-                        <td><img id="Mas17" src={shibafu} alt="green"  onClick={() => this.onClick("Mas17" )} /></td>
-                        <td><img id="Mas18" src={shibafu} alt="green"  onClick={() => this.onClick("Mas18" )} /></td>
-                        <td><img id="Mas19" src={shibafu} alt="green"  onClick={() => this.onClick("Mas19" )} /></td>
-                        <td><img id="Mas20" src={shibafu} alt="green"  onClick={() => this.onClick("Mas20" )} /></td>
-                    </tr>
-                    <tr>
-                        <td><img id="Mas21" src={shibafu} alt="green"  onClick={() => this.onClick("Mas21" )} /></td>
-                        <td><img id="Mas22" src={shibafu} alt="green"  onClick={() => this.onClick("Mas22" )} /></td>
-                        <td><img id="Mas23" src={shibafu} alt="green"  onClick={() => this.onClick("Mas23" )} /></td>
-                        <td><img id="Mas24" src={shibafu} alt="green"  onClick={() => this.onClick("Mas24" )} /></td>
-                        <td><img id="Mas25" src={shibafu} alt="green"  onClick={() => this.onClick("Mas25" )} /></td>
-                    </tr>
+                    {this.MakeMap()}
                 </tbody>
             </table>
             </div>
