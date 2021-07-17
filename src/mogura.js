@@ -33,7 +33,6 @@ export default class Mogratataki extends Component  {
         img.src = shibafu;
 
         var a = Math.floor( Math.random() * 25)+1 ;
-        console.log(a);
 
         const IdNum = "Mas" + a;
         this.setState({
@@ -46,7 +45,6 @@ export default class Mogratataki extends Component  {
 
     ClickStart = () =>{
         const {StartFlg} = this.state;
-        console.log("flg is "+ StartFlg);
         var Flg = StartFlg;
         if(StartFlg === false){
             this.intervalId = setInterval(()=>{
@@ -96,7 +94,6 @@ export default class Mogratataki extends Component  {
             <label id="timer"></label>
             <div>
                 時間:{this.state.timer}  
-                
                 スコア:{this.state.result}
             </div>
             <table>
