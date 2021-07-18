@@ -3,6 +3,7 @@ import "./mogura.css";
 import mogura from './image/mogura2.png';
 import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
+import clickImg from './image/hammer2.png';
 
 export default class Mogratataki extends Component  {
 
@@ -17,6 +18,10 @@ export default class Mogratataki extends Component  {
     }
 
     onClick = (id) => {
+        let element = document.getElementById("tables");
+        //element.style.cursor = "url('http://wiki-devel.sugarlabs.org/images/e/e2/Arrow.cur'), auto";
+        element.style.cursor = "url({clickImg}),auto";
+        //element.style.cursor = "pointer";
         const {location} = this.state;
 
         if(location === id){
@@ -96,7 +101,7 @@ export default class Mogratataki extends Component  {
                 時間:{this.state.timer}  
                 スコア:{this.state.result}
             </div>
-            <table>
+            <table id="tables">
                 <tbody>
                     {this.MakeMap()}
                 </tbody>
