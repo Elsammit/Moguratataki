@@ -4,6 +4,7 @@ import mogura from './image/mogura2.png';
 import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
 import clickImg from './image/hammer2.png';
+import hammer from './image/hammer.png';
 
 export default class Mogratataki extends Component  {
 
@@ -20,7 +21,7 @@ export default class Mogratataki extends Component  {
     onClick = (id) => {
         let element = document.getElementById("tables");
         //element.style.cursor = "url('http://wiki-devel.sugarlabs.org/images/e/e2/Arrow.cur'), auto";
-        element.style.cursor = "url({clickImg}),auto";
+        element.style.cursor = "url("+ clickImg + "),auto";
         //element.style.cursor = "pointer";
         const {location} = this.state;
 
@@ -29,6 +30,13 @@ export default class Mogratataki extends Component  {
             img.src = hit;
             this.setState({result:this.state.result+1});
         }
+        setTimeout(
+            function () {
+              console.log("アラートを表示したました。");
+              element.style.cursor = "url("+ hammer + "),auto";
+            }, 
+            "100"
+          );
     }
     
     rand_MoguraUp = () =>{
