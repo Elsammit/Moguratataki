@@ -20,9 +20,7 @@ export default class Mogratataki extends Component  {
 
     onClick = (id) => {
         let element = document.getElementById("tables");
-        //element.style.cursor = "url('http://wiki-devel.sugarlabs.org/images/e/e2/Arrow.cur'), auto";
         element.style.cursor = "url("+ clickImg + "),auto";
-        //element.style.cursor = "pointer";
         const {location} = this.state;
 
         if(location === id){
@@ -32,7 +30,6 @@ export default class Mogratataki extends Component  {
         }
         setTimeout(
             function () {
-              console.log("アラートを表示したました。");
               element.style.cursor = "url("+ hammer + "),auto";
             }, 
             "100"
