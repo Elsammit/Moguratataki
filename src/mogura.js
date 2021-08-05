@@ -86,10 +86,12 @@ export default class Mogratataki extends Component  {
             for(var j=1;j<=5;j++){
                 var num = j + (i-1)*5;
                 var str = "Mas"+num;
+                // 列追加
                 buf.push(
                     <td><img id={str} src={shibafu} alt="green" onClick={this.onClick.bind(this,str)} /></td>
                 );
             }
+            // 行追加
             List.push(<tr>{buf}</tr>);
         }
         return List;        
