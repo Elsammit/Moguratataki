@@ -6,25 +6,37 @@ import hit from './image/hit_mogura.png';
 import clickImg from './image/hammer2.png';
 import hammer from './image/hammer.png';
 
-export default class Mogratataki extends Component  {
+export interface Props {
+    location?: string;
+    StartFlg?: boolean;
+    timer?: number;
+    result?:number;
+}
 
-    constructor (props) {
+
+
+export default class Mogratataki extends Component<Props, 
+    {location: string, StartFlg: boolean, timer: number, result: number}>  {
+
+    constructor (props:Props) {
         super(props);
         this.state = {
-            location:"Mas1",
-            StartFlg:false,
-            timer:0,
-            result:0
+            'location':"Mas1",
+            'StartFlg':false,
+            'timer':0,
+            'result':0,
         };
     }
 
-    onClick = (id) => {
-        let element = document.getElementById("tables");
+    private intervalId: any;
+
+    onClick = (id:any) => {
+        let element:any = document.getElementById("tables");
         element.style.cursor = "url("+ clickImg + "),auto";
         const {location} = this.state;
 
         if(location === id){
-            var img = document.getElementById(id);
+            var img:any = document.getElementById(id);
             img.src = hit;
             this.setState({result:this.state.result+1});
         }
@@ -32,14 +44,14 @@ export default class Mogratataki extends Component  {
             function () {
               element.style.cursor = "url("+ hammer + "),auto";
             }, 
-            "100"
+            100
           );
     }
     
     rand_MoguraUp = () =>{
         const {location} = this.state;
 
-        var img = document.getElementById(location);
+        var img:any = document.getElementById(location);
         img.src = shibafu;
 
         var a = Math.floor( Math.random() * 25)+1 ;
@@ -49,7 +61,7 @@ export default class Mogratataki extends Component  {
             location:IdNum
         })
 
-        var Next_img = document.getElementById(IdNum);
+        var Next_img:any = document.getElementById(IdNum);
         Next_img.src = mogura;
     }
 
@@ -61,8 +73,9 @@ export default class Mogratataki extends Component  {
                 this.rand_MoguraUp();
                 this.setState({timer:this.state.timer+1});
             }, 1000);
-            document.getElementById("StButton").setAttribute("disabled", "disabled");
-            document.getElementById("StButton").style.backgroundColor = "gray";
+            let buf = document.getElementById("StButton") as HTMLInputElement;
+            buf.setAttribute("disabled", "disabled");
+            buf.style.backgroundColor = "gray";
             setTimeout(()=>{
                 this.finish_mogura();
             },30000);
@@ -75,8 +88,10 @@ export default class Mogratataki extends Component  {
 
     finish_mogura = () =>{
         clearInterval(this.intervalId);
-        document.getElementById("StButton").removeAttribute("disabled");
-        document.getElementById("StButton").style.backgroundColor = "#24d";
+        let buf = document.getElementById("StButton") as HTMLInputElement;
+
+        buf.removeAttribute("disabled");
+        buf.style.backgroundColor = "#24d";
     }
     
     MakeMap = () =>{
