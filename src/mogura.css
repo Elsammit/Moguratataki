@@ -1,5 +1,8 @@
 .divCenter{
     text-align: center;
+    -webkit-user-drag:none;
+    -khtml-user-drag:none;
+    user-select: none;
 }
 
 .title{
@@ -13,13 +16,22 @@ img{
     height: 130px;
 }
 
+.mapArea{
+    display: flex;
+}
+
 table{
-    width: 300px;
-    height: 120px;
     border-radius: 4px;
     border:3px solid #333;
     margin: 1px auto;
     cursor : url(./image/hammer.png), auto;
+    float: center;
+}
+
+.subInfo{
+    width:300px;
+    text-align: left;
+    font-size: 24px;
 }
 
 .StButton{
