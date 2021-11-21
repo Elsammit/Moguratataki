@@ -1,0 +1,28 @@
+.overlay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    z-index:2;
+    width:30%;
+    padding:1em;
+    background:#fff;
+}
+
+.closeBtn{
+    height:80px;
+    width:150px;
+    font-size: 28px;
+}
+
+.closeBtn:hover{
+    background-color:blue;
+    color:white;
+    cursor:pointer;
+}
+
+.finsMsg{
+    font-size:28px;
+}
