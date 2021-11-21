@@ -5,16 +5,18 @@ import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
 import clickImg from './image/hammer2.png';
 import hammer from './image/hammer.png';
+import MadeDialog from './dialog'
 
 export interface Props {
     location?: string;
     StartFlg?: boolean;
     timer?: number;
     result?:number;
+    popupstate?:boolean;
 }
 
 export default class Mogratataki extends Component<Props, 
-    {location: string, StartFlg: boolean, timer: number, result: number}>  {
+    {location: string, StartFlg: boolean, timer: number, result: number, popupstate: boolean}>  {
 
     
     intervalId: NodeJS.Timer | null;
@@ -26,6 +28,7 @@ export default class Mogratataki extends Component<Props,
             'StartFlg':false,
             'timer':0,
             'result':0,
+            'popupstate':true,
         };
         this.intervalId = null;
     }
@@ -79,7 +82,7 @@ export default class Mogratataki extends Component<Props,
             }, 1000);
             let buf = document.getElementById("StButton") as HTMLInputElement;
             buf.setAttribute("disabled", "disabled");
-            buf.style.backgroundColor = "gray";
+            //buf.style.backgroundColor = "gray";
             setTimeout(()=>{
                 this.finish_mogura();
             },31000);
@@ -97,11 +100,11 @@ export default class Mogratataki extends Component<Props,
         let buf = document.getElementById("StButton") as HTMLInputElement;
 
         buf.removeAttribute("disabled");
-        buf.style.backgroundColor = "#24d";
+        //buf.style.backgroundColor = "gainsboro";
 
         this.intervalId = null;
         this.setState({StartFlg:false});
-        alert("Finish Mogura Tataki");
+        this.setState({popupstate:true});
     }
     
     MakeMap = () =>{
@@ -132,6 +135,22 @@ export default class Mogratataki extends Component<Props,
         return List;        
     }
 
+    updateState = (state:boolean)=>{
+        console.log("call back function call");
+        this.setState({popupstate:state});
+    }
+
+    OpenDialog = () =>{
+        const {popupstate} = this.state;
+        const{result} = this.state;
+        let Msg:string = "score is " + result;
+        if(popupstate == true){
+            return <MadeDialog closeState={this.updateState.bind(this)} showMsg = {Msg}></MadeDialog>
+        }else{
+            return <p></p>
+        }
+    }
+
     render() {
         return (<div className="divCenter">
             <div>
@@ -141,6 +160,7 @@ export default class Mogratataki extends Component<Props,
                 <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
                 <label id="timer"></label>
             </div>
+            {this.OpenDialog()}
             <div className="mapArea">
                 <table id="tables">
                     <tbody>
@@ -154,7 +174,9 @@ export default class Mogratataki extends Component<Props,
                     スコア:{this.state.result}
                 </div>
             </div>
+            
         </div>
         );
     }
   }
+
