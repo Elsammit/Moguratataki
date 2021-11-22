@@ -40,7 +40,7 @@ export default class Mogratataki extends Component<Props,
             const {location} = this.state;
     
             if(location === id){
-                var img:HTMLImageElement = document.getElementById(id) as HTMLImageElement;
+                var img = document.getElementById(id) as HTMLImageElement;
                 img.src = hit;
                 this.setState({result:this.state.result+1});
             }
@@ -67,7 +67,7 @@ export default class Mogratataki extends Component<Props,
             location:IdNum
         })
 
-        var Next_img:HTMLImageElement = document.getElementById(IdNum) as HTMLImageElement;
+        var Next_img:HTMLImageElement= document.getElementById(IdNum) as HTMLImageElement;
         Next_img.src = mogura;
     }
 
@@ -80,9 +80,12 @@ export default class Mogratataki extends Component<Props,
                 this.rand_MoguraUp();
                 this.setState({timer:this.state.timer+1});
             }, 1000);
-            let buf = document.getElementById("StButton") as HTMLInputElement;
-            buf.setAttribute("disabled", "disabled");
-            //buf.style.backgroundColor = "gray";
+            let buf  = document.getElementById("StButton");
+            buf?.setAttribute("disabled", "disabled");
+            
+            let timeCircle = document.getElementById("circle") as HTMLelement;
+            timeCircle?.className = "circle-start";
+
             setTimeout(()=>{
                 this.finish_mogura();
             },31000);
@@ -97,10 +100,9 @@ export default class Mogratataki extends Component<Props,
         if(this.intervalId){
             clearInterval(this.intervalId);
         }
-        let buf = document.getElementById("StButton") as HTMLInputElement;
+        let buf = document.getElementById("StButton");
 
-        buf.removeAttribute("disabled");
-        //buf.style.backgroundColor = "gainsboro";
+        buf?.removeAttribute("disabled");
 
         this.intervalId = null;
         this.setState({StartFlg:false});
@@ -119,7 +121,7 @@ export default class Mogratataki extends Component<Props,
                     <td><img id={str} src={shibafu} alt="green" onClick={this.onClick.bind(this,str)} /></td>
                 );
 
-                let element:HTMLImageElement = document.getElementById(str) as HTMLImageElement;
+                let element = document.getElementById(str);
                 if(element){
                     element.ondragstart = function (){
                         console.log("ドラッグ操作を開始した");
@@ -169,12 +171,17 @@ export default class Mogratataki extends Component<Props,
                 </table>
 
                 <div className="subInfo">
+                    <div id = "circle" className="circle-stop">
+                        <div className='circle-inner'>
+                            loading
+                        </div>
+                    </div>
                     時間:{this.state.timer}  
                     <br />
                     スコア:{this.state.result}
                 </div>
             </div>
-            
+
         </div>
         );
     }
