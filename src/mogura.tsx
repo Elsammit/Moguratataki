@@ -26,7 +26,7 @@ export default class Mogratataki extends Component<Props,
         this.state = {
             'location':"Mas1",
             'StartFlg':false,
-            'timer':0,
+            'timer':30,
             'result':0,
             'popupstate':true,
         };
@@ -78,13 +78,13 @@ export default class Mogratataki extends Component<Props,
         if(StartFlg === false){
             this.intervalId = setInterval(()=>{
                 this.rand_MoguraUp();
-                this.setState({timer:this.state.timer+1});
+                this.setState({timer:this.state.timer-1});
             }, 1000);
             let buf  = document.getElementById("StButton");
             buf?.setAttribute("disabled", "disabled");
             
-            let timeCircle = document.getElementById("circle") as HTMLelement;
-            timeCircle?.className = "circle-start";
+            let timeCircle = document.getElementById("circle") as HTMLElement;
+            timeCircle.className = "circle-start";
 
             setTimeout(()=>{
                 this.finish_mogura();
@@ -107,6 +107,7 @@ export default class Mogratataki extends Component<Props,
         this.intervalId = null;
         this.setState({StartFlg:false});
         this.setState({popupstate:true});
+        this.setState({timer:30});
     }
     
     MakeMap = () =>{
@@ -173,10 +174,9 @@ export default class Mogratataki extends Component<Props,
                 <div className="subInfo">
                     <div id = "circle" className="circle-stop">
                         <div className='circle-inner'>
-                            loading
+                            {this.state.timer}秒
                         </div>
                     </div>
-                    時間:{this.state.timer}  
                     <br />
                     スコア:{this.state.result}
                 </div>
