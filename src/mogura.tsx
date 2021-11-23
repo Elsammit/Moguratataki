@@ -21,7 +21,6 @@ export default class Mogratataki extends Component<Props,
 
     intervalId: NodeJS.Timer | null;
     
-
     constructor (props:Props) {
         super(props);
         this.state = {
