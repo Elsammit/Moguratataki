@@ -3,18 +3,19 @@
     -webkit-user-drag:none;
     -khtml-user-drag:none;
     user-select: none;
-    width:1200px;
+    width:1000px;
 }
 
 .title{
-    margin: 50px auto;
+    margin: 20px 80px;
     text-align: center;
-    font-size: 80px;
+    width:800px;
+    font-size: 48px;
 }
 
 img{
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
 }
 
 .mapArea{
@@ -36,15 +37,12 @@ table{
 }
 
 .StButton{
-    font-size: 30px;
+    margin-left: 120px;
+    font-size: 20px;
     font-weight: bold;
     padding:10px 30px;
+    border-radius: 30px;
     background-color:gainsboro;
-    /*
-    color:#fff;
-    border-style: none;
-    background-color: #24d;
-    */
 }
 
 .StButton:hover{
