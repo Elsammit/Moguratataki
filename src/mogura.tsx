@@ -5,7 +5,14 @@ import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
 import clickImg from './image/hammer2.png';
 import hammer from './image/hammer.png';
+import ngImg from './image/numa_hamaru_woman.png';
+import batuMark from './image/mark_batsu.png';
 import MadeDialog from './dialog'
+
+type AppearSt = {
+    image: string;
+    type:number;
+}
 
 export interface Props {
     location?: string;
@@ -13,13 +20,17 @@ export interface Props {
     timer?: number;
     result?:number;
     popupstate?:boolean;
+    clickCount?:number;
 }
 const TIMER:number = 30;
 
 export default class Mogratataki extends Component<Props, 
-    {location: string, StartFlg: boolean, timer: number, result: number, popupstate: boolean}>  {
+    {location: string, StartFlg: boolean, timer: number, 
+        result: number, popupstate: boolean, clickCount:number}>  {
 
     intervalId: NodeJS.Timer | null;
+    m_appearSt:AppearSt;
+    isClicked: boolean;
     
     constructor (props:Props) {
         super(props);
@@ -29,8 +40,11 @@ export default class Mogratataki extends Component<Props,
             'timer':TIMER,
             'result':0,
             'popupstate':false,
+            'clickCount':0,
         };
         this.intervalId = null;
+        this.m_appearSt = {image:"",type:0};
+        this.isClicked = false;
     }
 
     onClick = (id:string) => {
@@ -38,11 +52,25 @@ export default class Mogratataki extends Component<Props,
             let element:HTMLTableElement = document.getElementById("tables") as HTMLTableElement;
             element.style.cursor = "url("+ clickImg + "),auto";
             const {location} = this.state;
-    
+
             if(location === id){
                 let img = document.getElementById(id) as HTMLImageElement;
-                img.src = hit;
-                this.setState({result:this.state.result+1});
+                this.isClicked = true;
+                if(this.m_appearSt.type === 0){
+                    img.src = hit;
+                    const {clickCount} = this.state;
+                    let point: number = clickCount*10;
+                    if(clickCount === 0){
+                        point += 1;
+                    }
+                    
+                    this.setState({result:this.state.result+point});
+                    this.setState({clickCount:this.state.clickCount + 1});   
+                }else{
+                    img.src = batuMark;
+                    this.setState({result:this.state.result - 10});
+                    this.setState({clickCount:0});                 
+                }
             }
             setTimeout(
                 function () {
@@ -53,6 +81,11 @@ export default class Mogratataki extends Component<Props,
     
     rand_MoguraUp = () =>{
         const {location} = this.state;
+
+        if(this.isClicked === false && this.m_appearSt.type === 0){
+            this.setState({clickCount:0});
+        }
+        this.isClicked = false;
 
         let img:HTMLImageElement = document.getElementById(location) as HTMLImageElement;
         img.src = shibafu;
@@ -65,11 +98,23 @@ export default class Mogratataki extends Component<Props,
         })
 
         let Next_img = document.getElementById(IdNum) as HTMLImageElement;
-        Next_img.src = mogura;
+
+        let b:Number = Number(Math.floor( Math.random() * 10));
+        if(b > 2){   
+            this.m_appearSt.image = mogura;
+            this.m_appearSt.type = 0;
+        }else{
+            this.m_appearSt.image = ngImg;
+            this.m_appearSt.type = 1;
+        }
+        Next_img.src = this.m_appearSt.image;
     }
 
     ClickStart = () =>{
+        this.setState({result:0});
+
         const {StartFlg} = this.state;
+        
         let Flg:boolean = StartFlg;
         if(StartFlg === false){
             this.intervalId = setInterval(()=>{
