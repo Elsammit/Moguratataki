@@ -8,6 +8,7 @@ import hammer from './image/hammer.png';
 import ngImg from './image/numa_hamaru_woman.png';
 import batuMark from './image/mark_batsu.png';
 import MadeDialog from './dialog'
+import LevelSet from './LevelSet'
 
 type AppearSt = {
     image: string;
@@ -21,16 +22,20 @@ export interface Props {
     result?:number;
     popupstate?:boolean;
     clickCount?:number;
+    freqClock?:number;
+    levelState?:boolean;
 }
 const TIMER:number = 30;
 
 export default class Mogratataki extends Component<Props, 
     {location: string, StartFlg: boolean, timer: number, 
-        result: number, popupstate: boolean, clickCount:number}>  {
+        result: number, popupstate: boolean, clickCount:number, freqClock:number, levelState:boolean}>  {
 
     intervalId: NodeJS.Timer | null;
+    intervalId2: NodeJS.Timer | null;
     m_appearSt:AppearSt;
     isClicked: boolean;
+    Lv:number;
     
     constructor (props:Props) {
         super(props);
@@ -41,10 +46,14 @@ export default class Mogratataki extends Component<Props,
             'result':0,
             'popupstate':false,
             'clickCount':0,
+            'freqClock':1000,
+            'levelState':false,
         };
         this.intervalId = null;
+        this.intervalId2 = null;
         this.m_appearSt = {image:"",type:0};
         this.isClicked = false;
+        this.Lv = 1;
     }
 
     onClick = (id:string) => {
@@ -119,8 +128,12 @@ export default class Mogratataki extends Component<Props,
         if(StartFlg === false){
             this.intervalId = setInterval(()=>{
                 this.rand_MoguraUp();
+            }, this.state.freqClock);
+
+            this.intervalId2 = setInterval(()=>{
                 this.setState({timer:this.state.timer-1});
             }, 1000);
+            
             let buf  = document.getElementById("StButton");
             buf?.setAttribute("disabled", "disabled");
             
@@ -139,6 +152,10 @@ export default class Mogratataki extends Component<Props,
         if(this.intervalId){
             clearInterval(this.intervalId);
         }
+        if(this.intervalId2){
+            clearInterval(this.intervalId2);
+        }
+        
         let buf: HTMLElement | null = document.getElementById("StButton");
         buf?.removeAttribute("disabled");
 
@@ -146,6 +163,9 @@ export default class Mogratataki extends Component<Props,
         this.setState({StartFlg:false});
         this.setState({popupstate:true});
         this.setState({timer:TIMER});
+
+        let timeCircle:HTMLElement | null = document.getElementById("circle");
+        if(timeCircle != null){ timeCircle.className = "circle-stop "; }
     }
     
     MakeMap = () =>{
@@ -189,14 +209,46 @@ export default class Mogratataki extends Component<Props,
         }
     }
 
+    updateLevel = (state:number) =>{
+        console.log("call back Level function call");
+        this.setState({levelState:false});
+        let clock = 1000;
+        if(state === 0){
+            clock = 500;
+        }else if(state === 1){
+            clock = 1000;
+        }else{
+            clock = 1500;
+        }
+        this.Lv = state;
+        this.setState({freqClock:clock});
+    }
+
+    OpenLevelDialog = () =>{
+        const {levelState} = this.state;
+        const{result} = this.state;
+        let Msg:string = "score is " + result;
+        if(levelState === true){
+            return <LevelSet level={this.updateLevel.bind(this)} initlevel={this.Lv} showMsg = {Msg}></LevelSet>
+        }else{
+            return <p></p>
+        }
+    }
+
+    ClickLevelDialog = () =>{
+        this.setState({levelState:true});
+    }
+
     render() {
         return (
         <div className="divCenter">
             <div className="title">
                 <u>モグラたたきゲーム</u>
                 <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
+                <input type="button" id="LvButton"　className="LvButton" value="難易度設定" onClick={this.ClickLevelDialog}></input>
             </div>
             {this.OpenDialog()}
+            {this.OpenLevelDialog()}
             <div className="mapArea">
                 <table id="tables">
                     <tbody>

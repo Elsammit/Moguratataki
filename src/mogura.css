@@ -45,7 +45,16 @@ table{
     background-color:gainsboro;
 }
 
-.StButton:hover{
+.LvButton{
+    margin-left: 550px;
+    font-size: 20px;
+    font-weight: bold;
+    padding:10px 30px;
+    border-radius: 30px;
+    background-color:gainsboro;
+}
+
+.StButton:hover,.LvButton:hover{
     color:#fff;
     background-color: #24d;    
     cursor:pointer;
