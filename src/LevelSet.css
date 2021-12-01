@@ -1,0 +1,9 @@
+.listbox{
+    font-size: 15px;
+    transform: scale(2.0);
+    margin:30px;
+}
+
+.listbox > input{
+    margin-left: 20px;
+}
