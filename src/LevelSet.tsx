@@ -18,9 +18,14 @@ export default class LevelSet extends React.Component<Props, {radio: number}> {
         
     }
 
-    getLevel = () => {
-        const {radio} = this.state;
-        this.props.level(radio);
+    getLevel = (type:number) => {
+        if(type == 1){
+            const {radio} = this.state;
+            this.props.level(radio);
+        }else{
+            this.props.level(this.props.initlevel);
+        }
+
     }
 
     render() {
@@ -40,7 +45,11 @@ export default class LevelSet extends React.Component<Props, {radio: number}> {
                             onChange={() => this.setState({radio:2})}/>
                         <label htmlFor="low">易しい</label>
                     </div>
-                    <p><button className='closeBtn' onClick={this.getLevel}>決定</button></p>
+                    <p>
+                        <button className='closeBtn' onClick={this.getLevel.bind(this,1)}>決定</button>
+                        <button className='closeBtn' onClick={this.getLevel.bind(this,0)}>キャンセル</button>
+                    </p>
+                
                 </div>
             </div>
         </div>
