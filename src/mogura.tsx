@@ -26,6 +26,13 @@ export interface Props {
     levelState?:boolean;
 }
 const TIMER:number = 30;
+const WIDTH:number = 5;
+const HEIGHT:number = 5;
+
+const LEVEL_MAX:number = 500;
+const LEVEL_MID:number = 1000;
+const LEVEL_MIN:number = 1500;
+const LVARRAY:number[] = [LEVEL_MAX, LEVEL_MIN, LEVEL_MIN];
 
 export default class Mogratataki extends Component<Props, 
     {location: string, StartFlg: boolean, timer: number, 
@@ -99,7 +106,7 @@ export default class Mogratataki extends Component<Props,
         let img:HTMLImageElement = document.getElementById(location) as HTMLImageElement;
         img.src = shibafu;
 
-        let a:Number = Number(Math.floor( Math.random() * 25))+1 ;
+        let a:Number = Number(Math.floor( Math.random() * (WIDTH * HEIGHT)))+1 ;
 
         const IdNum = "Mas" + a;
         this.setState({
@@ -108,7 +115,7 @@ export default class Mogratataki extends Component<Props,
 
         let Next_img = document.getElementById(IdNum) as HTMLImageElement;
 
-        let b:Number = Number(Math.floor( Math.random() * 10));
+        let b:Number = Number(Math.floor( Math.random() * 10)); // ダミーが出る確率.
         if(b > 2){   
             this.m_appearSt.image = mogura;
             this.m_appearSt.type = 0;
@@ -170,11 +177,11 @@ export default class Mogratataki extends Component<Props,
     
     MakeMap = () =>{
         let List = [];
-        for(let i=1;i<=5;i++){
+        for(let i:number = 1;i <= HEIGHT;i++){
             let buf = [];
-            for(let j:number = 1;j<=5;j++){
-                let num:number = j + (i-1)*5;
-                let str:string = "Mas"+num;
+            for(let j:number = 1;j <= WIDTH;j++){
+                let num:number = j + (i - 1) * WIDTH;
+                let str:string = "Mas" + num;
                 // 列追加
                 buf.push(
                     <td><img id={str} src={shibafu} alt="green" onClick={this.onClick.bind(this,str)} /></td>
@@ -212,16 +219,8 @@ export default class Mogratataki extends Component<Props,
     updateLevel = (state:number) =>{
         console.log("call back Level function call");
         this.setState({levelState:false});
-        let clock = 1000;
-        if(state === 0){
-            clock = 500;
-        }else if(state === 1){
-            clock = 1000;
-        }else{
-            clock = 1500;
-        }
         this.Lv = state;
-        this.setState({freqClock:clock});
+        this.setState({freqClock:LVARRAY[state]});
     }
 
     OpenLevelDialog = () =>{
