@@ -32,7 +32,7 @@ const HEIGHT:number = 5;
 const LEVEL_MAX:number = 500;
 const LEVEL_MID:number = 1000;
 const LEVEL_MIN:number = 1500;
-const LVARRAY:number[] = [LEVEL_MAX, LEVEL_MIN, LEVEL_MIN];
+const LVARRAY:number[] = [LEVEL_MAX, LEVEL_MID, LEVEL_MIN];
 
 export default class Mogratataki extends Component<Props, 
     {location: string, StartFlg: boolean, timer: number, 
@@ -201,7 +201,6 @@ export default class Mogratataki extends Component<Props,
     }
 
     updateState = (state:boolean)=>{
-        console.log("call back function call");
         this.setState({popupstate:state});
     }
 

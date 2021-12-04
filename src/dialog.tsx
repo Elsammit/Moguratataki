@@ -7,16 +7,7 @@ export interface Props {
 }
 
 export default class MadeDialog extends React.Component<Props> {
-    OpenDialog = () => {
-        this.setState({
-            showDialg:true,
-        });
-    }
-
     CloseDialog = () => {
-        this.setState({
-            showDialg:false,
-        });
         this.props.closeState(false);
     }
 
