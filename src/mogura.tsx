@@ -216,7 +216,6 @@ export default class Mogratataki extends Component<Props,
     }
 
     updateLevel = (state:number) =>{
-        console.log("call back Level function call");
         this.setState({levelState:false});
         this.Lv = state;
         this.setState({freqClock:LVARRAY[state]});
