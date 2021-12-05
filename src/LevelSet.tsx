@@ -21,12 +21,12 @@ export default class LevelSet extends React.Component<Props, {radio: number}> {
         this.state = {
             'radio':this.props.initlevel,
         };
-        
     }
 
     getLevel = (type:number) => {
-        if(type !== ISDECISION){
+        if(type === ISDECISION){
             const {radio} = this.state;
+            console.log("radio:" + radio);
             this.props.level(radio);
         }else{
             this.props.level(this.props.initlevel);
@@ -41,13 +41,13 @@ export default class LevelSet extends React.Component<Props, {radio: number}> {
                     <p className='finsMsg'>難易度設定</p>
                     <div className="listbox">
                         <input type="radio" id="high" name="level" checked={this.state.radio === 0}
-                            onChange={() => this.setState({radio:ISHARD})}/>
+                            onChange={() => this.setState({radio:0})}/>
                         <label htmlFor="high">難しい</label>
                         <input type="radio" id="middle" name="level" checked={this.state.radio === 1}
-                            onChange={() => this.setState({radio:ISNORMAL})}/>
+                            onChange={() => this.setState({radio:1})}/>
                         <label htmlFor="middle">普通</label>
                         <input type="radio" id="low" name="level" checked={this.state.radio === 2}
-                            onChange={() => this.setState({radio:ISEASY})}/>
+                            onChange={() => this.setState({radio:2})}/>
                         <label htmlFor="low">易しい</label>
                     </div>
                     <p>

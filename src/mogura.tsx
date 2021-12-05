@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./mogura.css";
 import mogura from './image/mogura2.png';
 import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
@@ -9,6 +8,8 @@ import ngImg from './image/numa_hamaru_woman.png';
 import batuMark from './image/mark_batsu.png';
 import MadeDialog from './dialog'
 import LevelSet from './LevelSet'
+import StartCount from './StartCount'
+import "./mogura.css";
 
 type AppearSt = {
     image: string;
@@ -24,6 +25,7 @@ export interface Props {
     clickCount?:number;
     freqClock?:number;
     levelState?:boolean;
+    stState?:boolean;
 }
 const TIMER:number = 30;
 const WIDTH:number = 5;
@@ -36,13 +38,15 @@ const LVARRAY:number[] = [LEVEL_MAX, LEVEL_MID, LEVEL_MIN];
 
 export default class Mogratataki extends Component<Props, 
     {location: string, StartFlg: boolean, timer: number, 
-        result: number, popupstate: boolean, clickCount:number, freqClock:number, levelState:boolean}>  {
+        result: number, popupstate: boolean, clickCount:number, 
+        freqClock:number, levelState:boolean, stState:boolean}>  {
 
     intervalId: NodeJS.Timer | null;
     intervalId2: NodeJS.Timer | null;
     m_appearSt:AppearSt;
     isClicked: boolean;
     Lv:number;
+    BeforeStart:number;
     
     constructor (props:Props) {
         super(props);
@@ -55,12 +59,14 @@ export default class Mogratataki extends Component<Props,
             'clickCount':0,
             'freqClock':1000,
             'levelState':false,
+            'stState':false,
         };
         this.intervalId = null;
         this.intervalId2 = null;
         this.m_appearSt = {image:"",type:0};
         this.isClicked = false;
         this.Lv = 1;
+        this.BeforeStart = 3;
     }
 
     onClick = (id:string) => {
@@ -128,31 +134,41 @@ export default class Mogratataki extends Component<Props,
 
     ClickStart = () =>{
         this.setState({result:0});
+        let Flg:boolean = this.state.StartFlg;
 
-        const {StartFlg} = this.state;
-        
-        let Flg:boolean = StartFlg;
-        if(StartFlg === false){
-            this.intervalId = setInterval(()=>{
-                this.rand_MoguraUp();
-            }, this.state.freqClock);
-
+        if(Flg === false){
             this.intervalId2 = setInterval(()=>{
-                this.setState({timer:this.state.timer-1});
+                if(this.BeforeStart === -1){
+                    this.InitMogPropaty();
+                    this.BeforeStart--;
+                }else if(this.BeforeStart < 0){
+                    this.setState({timer:this.state.timer-1});
+                }else{
+                    this.BeforeStart--;
+                }
+                
             }, 1000);
-            
-            let buf  = document.getElementById("StButton");
-            buf?.setAttribute("disabled", "disabled");
-            
-            let timeCircle:HTMLElement | null = document.getElementById("circle");
-            if(timeCircle != null){ timeCircle.className = "circle-start"; }
-            
-            setTimeout(()=>{
-                this.finish_mogura();
-            },30010);
+            this.setState({stState:true});
             Flg = true;
         }
         this.setState({StartFlg:Flg});
+    }
+
+    InitMogPropaty = () =>{
+        console.log("call InitMog");
+        this.intervalId = setInterval(()=>{
+            this.rand_MoguraUp();
+        }, this.state.freqClock);
+        
+        let buf  = document.getElementById("StButton");
+        buf?.setAttribute("disabled", "disabled");
+        
+        let timeCircle:HTMLElement | null = document.getElementById("circle");
+        if(timeCircle != null){ timeCircle.className = "circle-start"; }
+        
+        setTimeout(()=>{
+            this.finish_mogura();
+        },30010);
     }
 
     finish_mogura = () =>{
@@ -170,6 +186,7 @@ export default class Mogratataki extends Component<Props,
         this.setState({StartFlg:false});
         this.setState({popupstate:true});
         this.setState({timer:TIMER});
+        this.BeforeStart = 3;
 
         let timeCircle:HTMLElement | null = document.getElementById("circle");
         if(timeCircle != null){ timeCircle.className = "circle-stop "; }
@@ -216,6 +233,7 @@ export default class Mogratataki extends Component<Props,
     }
 
     updateLevel = (state:number) =>{
+        console.log("Level:"+state);
         this.setState({levelState:false});
         this.Lv = state;
         this.setState({freqClock:LVARRAY[state]});
@@ -236,6 +254,19 @@ export default class Mogratataki extends Component<Props,
         this.setState({levelState:true});
     }
 
+    updateStWin = (state:boolean) =>{
+        this.setState({stState:state});
+    }
+
+    OpenStartCountDialog = () => {
+        const {stState} = this.state;
+        if(stState === true){
+            return <StartCount closeState={this.updateStWin.bind(this)} initCount={this.BeforeStart}></StartCount>
+        }else{
+            return <p></p>
+        }        
+    }
+
     render() {
         return (
         <div className="divCenter">
@@ -244,6 +275,7 @@ export default class Mogratataki extends Component<Props,
                 <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
                 <input type="button" id="LvButton"　className="LvButton" value="難易度設定" onClick={this.ClickLevelDialog}></input>
             </div>
+            {this.OpenStartCountDialog()}
             {this.OpenDialog()}
             {this.OpenLevelDialog()}
             <div className="mapArea">
