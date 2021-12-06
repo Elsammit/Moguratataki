@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+//import Audio from 'ts-audio';
+
 import mogura from './image/mogura2.png';
 import shibafu from './image/shibafu.png';
 import hit from './image/hit_mogura.png';
@@ -11,11 +13,12 @@ import LevelSet from './LevelSet'
 import StartCount from './StartCount'
 import "./mogura.css";
 
+import sound from "./music/pikopiko.mp3";
+
 type AppearSt = {
     image: string;
     type:number;
 }
-
 export interface Props {
     location?: string;
     StartFlg?: boolean;
@@ -70,12 +73,16 @@ export default class Mogratataki extends Component<Props,
     }
 
     onClick = (id:string) => {
+        const audio = new Audio(sound);
         if(this.intervalId){
             let element:HTMLTableElement = document.getElementById("tables") as HTMLTableElement;
             element.style.cursor = "url("+ clickImg + "),auto";
             const {location} = this.state;
 
+            audio.play();
+
             if(location === id){
+
                 let img = document.getElementById(id) as HTMLImageElement;
                 this.isClicked = true;
                 if(this.m_appearSt.type === 0){
