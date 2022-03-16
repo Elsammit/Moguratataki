@@ -73,7 +73,7 @@ export default class Mogratataki extends Component<Props,
     }
 
     onClick = (id:string) => {
-        const audio = new Audio(sound);
+        const audio = new Audio(sound); // ハンマー音.
         if(this.intervalId){
             let element:HTMLTableElement = document.getElementById("tables") as HTMLTableElement;
             element.style.cursor = "url("+ clickImg + "),auto";
@@ -139,6 +139,7 @@ export default class Mogratataki extends Component<Props,
         Next_img.src = this.m_appearSt.image;
     }
 
+    // スタートボタンクリック.
     ClickStart = () =>{
         this.setState({result:0});
         let Flg:boolean = this.state.StartFlg;
@@ -161,6 +162,7 @@ export default class Mogratataki extends Component<Props,
         this.setState({StartFlg:Flg});
     }
 
+    // モグラ初期化処理.
     InitMogPropaty = () =>{
         console.log("call InitMog");
         this.intervalId = setInterval(()=>{
@@ -246,6 +248,7 @@ export default class Mogratataki extends Component<Props,
         this.setState({freqClock:LVARRAY[state]});
     }
 
+    // レベル切り替え用ダイアログ表示.
     OpenLevelDialog = () =>{
         const {levelState} = this.state;
         const{result} = this.state;
@@ -257,6 +260,7 @@ export default class Mogratataki extends Component<Props,
         }
     }
 
+    // ダイアログのクリック
     ClickLevelDialog = () =>{
         this.setState({levelState:true});
     }
@@ -279,8 +283,7 @@ export default class Mogratataki extends Component<Props,
         <div className="divCenter">
             <div className="title">
                 <u>モグラたたきゲーム</u>
-                <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
-                <input type="button" id="LvButton"　className="LvButton" value="難易度設定" onClick={this.ClickLevelDialog}></input>
+                
             </div>
             {this.OpenStartCountDialog()}
             {this.OpenDialog()}
@@ -293,6 +296,8 @@ export default class Mogratataki extends Component<Props,
                 </table>
 
                 <div className="subInfo">
+                <input type="button" id="StButton"　className="StButton" value="スタート" onClick={this.ClickStart}></input>
+                <input type="button" id="LvButton"　className="LvButton" value="難易度設定" onClick={this.ClickLevelDialog}></input>
                     <div id = "circle" className="circle-stop">
                         <div className='circle-inner'>
                             {this.state.timer}秒
