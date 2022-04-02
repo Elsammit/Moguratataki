@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+###Reactで作成したモグラたたきゲーム
+
+Reactで作成したモグラたたきゲームです。
+
+
 
 ## Available Scripts
 
