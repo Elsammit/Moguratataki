@@ -1,4 +1,7 @@
 .Startcontent{
+    position: fixed;
+    top:300px;
+    left: 250px;
     font-size: 32px;
     font-style: bold;
     z-index:2;

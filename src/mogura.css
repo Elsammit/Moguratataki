@@ -20,6 +20,8 @@ img{
 
 .mapArea{
     display: flex;
+    width: 900px;
+    margin-left: 100px;
 }
 
 table{
@@ -37,7 +39,8 @@ table{
 }
 
 .StButton{
-    margin-left: 120px;
+    margin-left: 0px;
+    margin-bottom: 10px;
     font-size: 20px;
     font-weight: bold;
     padding:10px 30px;
@@ -46,7 +49,8 @@ table{
 }
 
 .LvButton{
-    margin-left: 550px;
+    margin-left: 0px;
+    margin-bottom: 10px;
     font-size: 20px;
     font-weight: bold;
     padding:10px 30px;
