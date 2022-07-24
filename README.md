@@ -1,7 +1,9 @@
 ## Reactで作成したモグラたたきゲーム
 
 Reactで作成したモグラたたきゲームです。
+
 ![gif](https://github.com/Elsammit/Moguratataki/blob/devel/sample/sampleMovie.gif)
+
 
 
 ## Available Scripts
