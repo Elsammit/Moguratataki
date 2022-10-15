@@ -4,7 +4,6 @@ Reactで作成したモグラたたきゲームです。
 
 ![gif](https://github.com/Elsammit/Moguratataki/blob/devel/sample/sampleMovie.gif)
 
-
 ## Available Scripts
 
 In the project directory, you can run:
